@@ -9,12 +9,12 @@ package model;
  * @author fiat4
  */
 public class student {
-    private  String masv;
+    private  String manv;
     private String hoten,emailString,diachi;
     private boolean gioitinh;
 
     public student(String masv, String hoten, String emailString, String diachi, boolean gioitinh) {
-        this.masv = masv;
+        this.manv = masv;
         this.hoten = hoten;
         this.emailString = emailString;
         this.diachi = diachi;
@@ -22,11 +22,11 @@ public class student {
     }
 
     public String getMasv() {
-        return masv;
+        return manv;
     }
 
     public void setMasv(String masv) {
-        this.masv = masv;
+        this.manv = masv;
     }
 
     public String getHoten() {
@@ -65,12 +65,12 @@ public class student {
     }
 
     public student(String masv) {
-        this.masv = masv;
+        this.manv = masv;
     }
 
     @Override
     public String toString() {
-        return "student{" + "masv=" + masv + ", hoten=" + hoten + ", emailString=" + emailString + ", diachi=" + diachi + ", gioitinh=" + gioitinh + '}';
+        return "student{" + "masv=" + manv + ", hoten=" + hoten + ", emailString=" + emailString + ", diachi=" + diachi + ", gioitinh=" + gioitinh + '}';
     }
     
 }

@@ -21,11 +21,41 @@ public class studentdao {
     Connection conn = null;
     PreparedStatement stmm = null;
 
+        public int getProfit(String manvString,int Month) {
+      int rsut=0;
+        ResultSet rs = null;
+        Statement sttm = null;
+        try {
+            String sSQL = "select * from suachua where Manv='"+manvString+"'and MONTH(ngay)='"+Month+"'";
+            conn = helper.connectdb();
+            sttm = conn.createStatement();
+            rs = sttm.executeQuery(sSQL);
+            while (rs.next()) {
+             
+                int chiphi=rs.getInt(6);
+                int gia =rs.getInt(7);
+                rsut+=gia;
+                rsut+=chiphi;
+            }
+        } catch (Exception e) {
+            System.out.println("err"+e.toString());
+        }
+        finally{
+            try {
+                rs.close();sttm.close();conn.close();
+            } catch (Exception e) {
+                System.out.println("close err"+e.toString());
+            }
+        }
+   return rsut;
+    }
+
+    
     public int add(student st) {
 
         try {
 
-            String sSQL = "insert students(MASV,HOTEN,EMAIL,DIACHI,GIOITINH) values(?,?,?,?,?);";
+            String sSQL = "insert students(MANV,HOTEN,EMAIL,DIACHI,GIOITINH) values(?,?,?,?,?);";
             conn = helper.connectdb();
             stmm = conn.prepareStatement(sSQL);
             stmm.setString(1, st.getMasv());
@@ -47,13 +77,14 @@ public class studentdao {
 
         try {
 
-            String sSQL = "update students set HOTEN=? ,EMAIL=?,DIACHI=? where MASV=?";
+            String sSQL = "update students set HOTEN=? ,EMAIL=?,DIACHI=?,GIOITINH=? where MANV=?";
             conn = helper.connectdb();
             stmm = conn.prepareStatement(sSQL);
             stmm.setString(1, st.getHoten());
             stmm.setString(2, st.getEmailString());
             stmm.setString(3, st.getDiachi());
-            stmm.setString(4, st.getMasv());
+            stmm.setString(5, st.getMasv());
+             stmm.setBoolean(4, st.isGioitinh() );
 
             if (stmm.executeUpdate() > 0) {
                 System.out.println("update thanh cong");
@@ -69,7 +100,7 @@ public class studentdao {
 
         try {
 
-            String sSQL = "delete students where MASV='"+st+"'";
+            String sSQL = "delete students where MANV='"+st+"'";
                     
             conn = helper.connectdb();
             stmm = conn.prepareStatement(sSQL);
@@ -121,7 +152,7 @@ public class studentdao {
         ResultSet rs = null;
         Statement sttm = null;
         try {
-            String sSQL = "select * from students where masv='"+masv+"'";
+            String sSQL = "select * from students where MANV='"+masv+"'";
             conn = helper.connectdb();
             sttm = conn.createStatement();
             rs = sttm.executeQuery(sSQL);
